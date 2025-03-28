@@ -54,7 +54,7 @@ return res.status(201).json({
     error:false,
     user:{fullname:User.fullname,email:User.email},
     accessToken,
-    message:"Registration Successfull",
+    message:"Registration Successfull....",
 });
 
 })
