@@ -6,7 +6,7 @@ const Login=async(req,res)=>{
     const{email,password}=req.body;
 
     if(!email || !password){
-        return res.status(400).json({message:"Please fill teh eamil and password"})
+        return res.status(400).json({message:"Please fill the email and password"})
     }
 
     const user=await userModal.findOne({email});
