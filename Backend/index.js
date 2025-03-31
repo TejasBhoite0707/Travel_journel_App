@@ -8,6 +8,8 @@ import LoginRoute from './Routes/LoginRoute.js'
 import TravelStoryAddRouter from './Routes/TravelStoryAddRoute.js'
 import authenticateToken from './utilities.js'
 import getUserRoute from './Routes/getuserROUTE.js'
+import GetStoriesRouter from './Routes/GetALLtravelStories.js'
+
 dotenv.config();
 export const app=express();
 app.use(express.json());
@@ -27,6 +29,7 @@ app.use('/api',AccountCreationRouter)
 app.use('/api',LoginRoute)
 app.use('/api',authenticateToken,getUserRoute)
 app.use('/api',authenticateToken,TravelStoryAddRouter);
+app.use('/api',authenticateToken,GetStoriesRouter);
 
 let port=8000
 app.listen(port,()=>{
