@@ -8,8 +8,8 @@ import mongoose from 'mongoose'
 import userModal from './Modals/user.modal.js'
 import AccountCreationRouter from './Routes/CreateAcc.js'
 import LoginRoute from './Routes/LoginRoute.js'
-
-
+import authenticateToken from './utilities.js'
+import getUserRoute from './Routes/getuserROUTE.js'
 dotenv.config();
 export const app=express();
 app.use(express.json());
@@ -29,6 +29,7 @@ app.use('/api',AccountCreationRouter)
 
 
 app.use('/api',LoginRoute)
+app.use('/api',authenticateToken,getUserRoute)
 
 let port=8000
 app.listen(port,()=>{
