@@ -1,7 +1,6 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import userModal from '../Modals/user.modal.js';
-import authenticateToken from '../utilities.js';
+
+
 const GetUserController=async(req,res)=>{
     const{userId}=req.user;
     const isUser=await userModal.findOne({_id:userId})

@@ -1,13 +1,11 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import express from 'express'
 import cors from 'cors'
 import  dotenv from 'dotenv'
 import config from './config.json' assert{type:"json"}
 import mongoose from 'mongoose'
-import userModal from './Modals/user.modal.js'
 import AccountCreationRouter from './Routes/CreateAcc.js'
 import LoginRoute from './Routes/LoginRoute.js'
+import TravelStoryAddRouter from './Routes/TravelStoryAddRoute.js'
 import authenticateToken from './utilities.js'
 import getUserRoute from './Routes/getuserROUTE.js'
 dotenv.config();
@@ -26,10 +24,9 @@ catch(err){
 
 
 app.use('/api',AccountCreationRouter)
-
-
 app.use('/api',LoginRoute)
 app.use('/api',authenticateToken,getUserRoute)
+app.use('/api',authenticateToken,TravelStoryAddRouter);
 
 let port=8000
 app.listen(port,()=>{
