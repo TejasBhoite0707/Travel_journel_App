@@ -11,6 +11,7 @@ import authenticateToken from './utilities.js'
 import getUserRoute from './Routes/getuserROUTE.js'
 import GetStoriesRouter from './Routes/GetALLtravelStories.js'
 import ImageUploadRouter from './Routes/uploadImage.js'
+import DeleteImageRouter from './Routes/DeleteImageRoute.js'
 
 dotenv.config();
 export const app=express();
@@ -34,6 +35,8 @@ app.use('/api',authenticateToken,TravelStoryAddRouter);
 app.use('/api',authenticateToken,GetStoriesRouter);
 app.use('/api',ImageUploadRouter);
 app.use('/uploads', express.static('uploads'));
+
+app.use('/api',DeleteImageRouter);
 let port=8000
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
