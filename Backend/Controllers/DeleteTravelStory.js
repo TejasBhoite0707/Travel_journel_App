@@ -28,11 +28,11 @@ res.status(400).json({error:true,message:"Travel Story Not found"});
     console.log("FileName",filename);
     
     
-    const filePath=path.join(__dirname,'uploads',filename);
+    const filePath=path.join(__dirname,'../uploads',filename);
      console.log("FilePath",filePath);
      
      try {
-        if (fs.existsSync(filePath)) {  // Check if file exists before deleting
+        if (fs.existsSync(filePath)) {  
             fs.unlinkSync(filePath);
             console.log("Image file deleted successfully");
         } else {
