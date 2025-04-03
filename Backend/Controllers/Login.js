@@ -27,7 +27,7 @@ const Login=async(req,res)=>{
         }
     )
      
-    return res.status(400).json({error:false,
+    return res.status(200).json({error:false,
         message:"Login Successfull",
     user:{fullname:user.fullname,email:user.email},
     accessTokenLogin

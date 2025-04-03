@@ -12,6 +12,7 @@ const EditTravelStoryController=async(req,res)=>{
     const ParsedVisitedDate=new Date(parseInt(visitedDate));
     try {
         const TravelStory=await TravelStoryModel.findOne({_id:id,userId:userId});
+    console.log(TravelStory);
     
         if(!TravelStory){
             return res.status(404).json({error:true,message:"Travel Story Not found"});
