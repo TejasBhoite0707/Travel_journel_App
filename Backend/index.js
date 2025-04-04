@@ -15,6 +15,7 @@ import DeleteImageRouter from './Routes/DeleteImageRoute.js'
 import EditTravelStoryRouter from './Routes/EditTRavelStoryRoute.js'
 import DeleteTravelStoryRouter from './Routes/DeleteTravelStory.js'
 import FavouriteUpdate from './Routes/UpdateFavouriteRoute.js'
+import SearchRouter from './Routes/SearchRouting.js'
 
 dotenv.config();
 export const app=express();
@@ -44,6 +45,7 @@ app.use('/api',DeleteImageRouter);
 app.use('/api',authenticateToken,EditTravelStoryRouter);
 app.use('/api',authenticateToken,DeleteTravelStoryRouter);
 app.use('/api',authenticateToken,FavouriteUpdate);
+app.use('/api',authenticateToken,SearchRouter);
 let port=8000
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
