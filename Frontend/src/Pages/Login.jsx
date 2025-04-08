@@ -5,10 +5,15 @@ import {FaEyeSlash,FaEye} from 'react-icons/fa'
 const Login = () => {
   const navigate=useNavigate();
   const[showpassword,setShowpassword]=useState(false)
+  const [password,setPassword]=useState("");
+  const [email,setEmail]=useState("");
+  const[error,setError]=useState(null);
+  console.log(password,email);
+  
   return (
     <div className='h-screen bg-cyan-50 overflow-hidden relative'>
-<div className='w-96 h-[500px] rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 absolute rotate-[30deg] right-[-80px] top-[-100px] blur-2xl opacity-60 animate-pulse' />
-<div className='w-96 h-[500px] rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 absolute rotate-[45deg] bottom-[-100px] left-[-80px] blur-2xl opacity-60 animate-pulse' />
+<div className=' login-ui-box from-cyan-400 to-blue-600 absolute rotate-[30deg] right-[-80px] top-[-100px] blur-2xl opacity-60 animate-pulse' />
+<div className='login-ui-box from-blue-500 to-indigo-600 absolute rotate-[45deg] bottom-[-100px] left-[-80px] blur-2xl opacity-60 animate-pulse' />
 
       <div className='container h-screen flex items-center justify-center px-20 mx-auto'>
         <div className='w-2/4 h-[90vh] flex items-end  bg-cover bg-center rounded-lg p-10 z-50' style={{backgroundImage:  `url(${bgImage})`}} >
@@ -27,12 +32,18 @@ const Login = () => {
 
     <input
       type='email'
+      value={email}
+      onChange={(e)=>setEmail(e.target.value)}
+      name='email'
       placeholder='Enter your Email'
       className='input-box w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200'
     /><br />
 <div className='relative'>
 <input
       type={showpassword ?  'text':'password'}
+      value={password}
+      onChange={(e)=>setPassword(e.target.value)}
+      name='password'
       placeholder='Enter your Password'
       className='input-box w-full px-4 py-3 mb-6 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200'
     />
