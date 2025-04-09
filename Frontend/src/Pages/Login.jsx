@@ -2,16 +2,79 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bgImage from '../assets/images/bg-image.jpg'
 import {FaEyeSlash,FaEye} from 'react-icons/fa'
+import { validateEmail } from '../utils/Helper'
+import toast,{Toaster} from 'react-hot-toast'
+import axiosInstance from '../utils/ApiService'
 const Login = () => {
+  <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
   const navigate=useNavigate();
   const[showpassword,setShowpassword]=useState(false)
   const [password,setPassword]=useState("");
   const [email,setEmail]=useState("");
-  const[error,setError]=useState(null);
+ // const[error,setError]=useState(null);
   console.log(password,email);
+  const handleLogin=async(e)=>{
+e.preventDefault();
+if(!validateEmail(email)){
+  toast.error("plesae Enter Valid Email");
+  return;
+}
+if(!password){
+  toast.error("Please Enter Password");
+  return;
+}
+
+try {
+  const response=await axiosInstance.post('/api/login',{
+    email:email,
+    password:password,
+  })
+  console.log(response);
+  if(response.data && response.data.accessToken){
+    localStorage.setItem("token",response.data.accessToken)
+  }
+  
+  
+  toast.success("Login sucessFully")
+  navigate('/dashboard');
+} catch (error) {
+  console.error(error);
+  
+}
+
+  }
   
   return (
     <div className='h-screen bg-cyan-50 overflow-hidden relative'>
+      <Toaster
+  position="top-center"
+  reverseOrder={false}
+  toastOptions={{
+    duration: 3000,
+    style: {
+      background: '#0f172a', // dark blue
+      color: '#fff',
+      padding: '14px 20px',
+      borderRadius: '10px',
+      fontSize: '15px',
+      boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+    },
+    success: {
+      style: {
+        background: '#059669', // teal green
+      },
+    },
+    error: {
+      style: {
+        background: '#dc2626', // red
+      },
+    },
+  }}
+/>
+
 <div className=' login-ui-box from-cyan-400 to-blue-600 absolute rotate-[30deg] right-[-80px] top-[-100px] blur-2xl opacity-60 animate-pulse' />
 <div className='login-ui-box from-blue-500 to-indigo-600 absolute rotate-[45deg] bottom-[-100px] left-[-80px] blur-2xl opacity-60 animate-pulse' />
 
@@ -27,11 +90,11 @@ const Login = () => {
           </div>
         </div>
         <div className='w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200/20'>
-  <form onSubmit={() => {}}>
+  <form onSubmit={handleLogin}>
     <h4 className='text-3xl font-bold mb-7 text-gray-800'>Login to Your Account</h4>
 
     <input
-      type='email'
+      type='text'
       value={email}
       onChange={(e)=>setEmail(e.target.value)}
       name='email'
@@ -53,6 +116,7 @@ const Login = () => {
 {!showpassword?<FaEyeSlash/>:<FaEye/>}
     </div>
 </div>
+{/* {error && <p className='text-red-500 text-xs pb-0'>{error}</p>} */}
    <br />
 
     <input
