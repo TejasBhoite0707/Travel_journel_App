@@ -33,15 +33,17 @@ try {
     password:password,
   })
   console.log(response);
-  if(response.data && response.data.accessToken){
-    localStorage.setItem("token",response.data.accessToken)
+  if(response.data && response.data.accessTokenLogin){
+    localStorage.setItem("token",response.data.accessTokenLogin)
   }
+  const ele=localStorage.getItem("token");
+  console.log(ele);
   
   
   toast.success("Login sucessFully")
   navigate('/dashboard');
 } catch (error) {
-  console.error(error);
+  console.error(error.response.data);
   
 }
 
