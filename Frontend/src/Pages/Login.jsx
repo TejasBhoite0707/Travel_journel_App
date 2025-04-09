@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bgImage from '../assets/images/bg-image.jpg'
 import {FaEyeSlash,FaEye} from 'react-icons/fa'
@@ -6,18 +6,70 @@ import { validateEmail } from '../utils/Helper'
 import toast,{Toaster} from 'react-hot-toast'
 import axiosInstance from '../utils/ApiService'
 const Login = () => {
-  <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
+  const Taglines = [
+    {
+      title: "Every Place Has a Story",
+      description: "Mark your journey—one location, one memory, one story at a time.",
+    },
+    {
+      title: "Moments with Meaning",
+      description: "Capture the feeling, the place, the date—it all matters.",
+    },
+    {
+      title: "Stories Behind Every Snap",
+      description: "Your photos aren’t just images—they're memories, moments, and maps.",
+    },
+    {
+      title: "Tag the Time, Tell the Tale",
+      description: "Because every memory deserves a location and a date to live forever.",
+    },
+    {
+      title: "Where Memories Meet Maps",
+      description: "Pin down the places that shaped your story—frame them with love.",
+    },
+    {
+      title: "Revisit Every Chapter",
+      description: "From sunny roads to quiet cafés—let your stories unfold with time and place.",
+    },
+    {
+      title: "Frame the Feeling, Mark the Moment",
+      description: "Let your images speak where you were and how it felt.",
+    },
+    {
+      title: "Capture. Describe. Remember.",
+      description: "Add the where and when to every photo—turn it into a living memory.",
+    },
+    {
+      title: "Map Your Memories",
+      description: "Track the places you've loved, through stories worth retelling.",
+    },
+    {
+      title: "Time Travel in a Tap",
+      description: "Scroll through places, dates, and stories—your visual diary awaits.",
+    }
+  ];
+  
   const navigate=useNavigate();
+  const[index,setIndex]=useState(0);
   const[showpassword,setShowpassword]=useState(false)
   const [password,setPassword]=useState("");
   const [email,setEmail]=useState("");
  // const[error,setError]=useState(null);
   console.log(password,email);
+
+  useEffect(()=>{
+    const interval=setInterval(()=>{
+      setIndex((prev)=>(prev+1)%Taglines.length);
+    },5000);
+    return ()=>clearInterval(interval);
+  },[]);
+
   const handleLogin=async(e)=>{
 e.preventDefault();
+if(!validateEmail(email) && !password){
+  toast.error("Please fill all the details");
+  return;
+}
 if(!validateEmail(email)){
   toast.error("plesae Enter Valid Email");
   return;
@@ -84,10 +136,10 @@ try {
         <div className='w-2/4 h-[90vh] flex items-end  bg-cover bg-center rounded-lg p-10 z-50' style={{backgroundImage:  `url(${bgImage})`}} >
           <div className='relative z-10 p-10 text-white'>
           <h4 className='text-5xl font-bold leading-tight drop-shadow-md '>
-      Discover New Horizons
+      {Taglines[index].title}
     </h4>
     <p className='text-base mt-4 leading-relaxed max-w-md drop-shadow-sm '>
-      Every journey holds a story. Capture your adventures, one memory at a time, in your personal travel journal.
+    {Taglines[index].description}
     </p>
           </div>
         </div>
@@ -129,13 +181,17 @@ try {
 
     <p className='text-xs text-center my-4 text-slate-500'>Or</p>
 
-    <input
-      type='submit'
-      value='CREATE ACCOUNT'
-      onClick={() => { navigate('/signup') }}
-      className='btn-primary w-full py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 font-medium cursor-pointer'
-    />
+    
   </form>
+  <input
+
+  value="CREATE ACCOUNT"
+  onClick={() => navigate('/signup')}
+  className=" btn-primary w-full py-3 bg-[#00C4E5] text-white rounded-full text-sm font-bold text-center 
+             hover:bg-[#00B2D4] transition-all duration-200 cursor-pointer
+             flex items-center justify-center shadow-md"
+/>
+
 </div>
 
       </div>
