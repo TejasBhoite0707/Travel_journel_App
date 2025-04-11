@@ -93,6 +93,8 @@ try {
   
   
   toast.success("Login sucessFully")
+  setEmail("");
+  setPassword("");
   navigate('/dashboard');
 } catch (error) {
   console.error(error.response.data);

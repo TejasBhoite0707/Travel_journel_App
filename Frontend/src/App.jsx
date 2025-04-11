@@ -8,8 +8,8 @@ import MainPage from "./Home/MainPage"
 
 function App() {
   const Root=()=>{
-    const isAuthenticated=!localStorage.getItem("token");
-    return (isAuthenticated)?<Login/> :<Home/>
+    const isAuthenticated=!!localStorage.getItem("token");
+    return (isAuthenticated)? <Home/>:<Navigate to="/login" />
   }
 
   return (
