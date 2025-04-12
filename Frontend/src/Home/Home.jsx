@@ -47,7 +47,7 @@ const Home = () => {
   />
 ))}
 <div className='bg-white rounded-2xl shadow-md p-7 flex flex-col items-center'>
-<img src={TempCardIamge} className='mb-4 w-2xl h-36 rounded-md'/>
+<img src={TempCardIamge} className='mb-4 w-2xl h-36 rounded-md cursor-pointer'/>
 <h1 className='mb-2 text-2xl font-medium'>Featured Memory</h1>
 <p className='text-center'>We do not remember days, we remember moments.</p>
 </div>
