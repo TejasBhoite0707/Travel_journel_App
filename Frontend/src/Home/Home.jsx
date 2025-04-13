@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/DashboardPages/Navbar';
 import { HiSparkles } from "react-icons/hi2";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { IoMdTime } from "react-icons/io";
 import Card from '../Components/DashboardPages/Card';
 import TempCardIamge from '../assets/images/TempImage.jpeg'
+import { Modal } from 'antd';
+import NewStory from '../Components/DashboardPages/AddNewStoryModel';
 const Home = () => {
+  const[modalOpen,setmodalOpen]=useState(false);
   const FisrtTwoCards=[
     {
         id: 1,
@@ -13,7 +16,8 @@ const Home = () => {
         title:"Add New Memory",
         desc:"Upload photos, write a story, and keep the memory alive.",
         bottomButton:"Get started",
-        buttonColor:"text-blue-400"
+        buttonColor:"text-blue-400",
+        onclick:()=>setmodalOpen(true),
     },
     {
         id:2,
@@ -44,6 +48,7 @@ const Home = () => {
   desc={card.desc}
   bottomButton={card.bottomButton}
   buttonColor={card.buttonColor}
+  onclick={card.onclick}
   />
 ))}
 <div className='bg-white rounded-2xl shadow-md p-7 flex flex-col items-center'>
@@ -55,6 +60,7 @@ const Home = () => {
 <p className="text-center text-sm italic text-gray-700">
         You are writing your story, one memory at a time.
       </p>
+      <NewStory open={modalOpen} onClose={()=>setmodalOpen(false)}/>
     </div>
   )
 }
