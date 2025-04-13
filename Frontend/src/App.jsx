@@ -5,6 +5,8 @@ import Signup from "./Pages/Signup"
 import Login from "./Pages/Login"
 import Home from "./Home/Home"
 import MainPage from "./Home/MainPage"
+import TimeLine from "./Components/DashboardPages/TimeLine"
+import FavouriteMemoriesTravel from "./Components/DashboardPages/FavouriteMemories"
 
 function App() {
   const Root=()=>{
@@ -20,6 +22,8 @@ function App() {
         <Route path="/dashboard" element={<Root/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/Timeline" element={<TimeLine/>}/>
+        <Route path="/FavouriteMemories" element={<FavouriteMemoriesTravel/>}/>
       </Routes>
     </Router>
     </>

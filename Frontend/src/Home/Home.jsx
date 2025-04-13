@@ -7,7 +7,9 @@ import Card from '../Components/DashboardPages/Card';
 import TempCardIamge from '../assets/images/TempImage.jpeg'
 import { Modal } from 'antd';
 import NewStory from '../Components/DashboardPages/AddNewStoryModel';
+import {  Link, useNavigate } from 'react-router-dom';
 const Home = () => {
+  const Navigate=useNavigate();
   const[modalOpen,setmodalOpen]=useState(false);
   const FisrtTwoCards=[
     {
@@ -25,7 +27,8 @@ const Home = () => {
         title:"Your Timeline",
         desc:" Visualize your journey, from your first post to now.",
         bottomButton:"Explore now",
-        buttonColor:"text-gray-500"
+        buttonColor:"text-gray-500",
+        onclick:()=>Navigate('/Timeline')
         
     }
 ]
@@ -52,7 +55,7 @@ const Home = () => {
   />
 ))}
 <div className='bg-white rounded-2xl shadow-md p-7 flex flex-col items-center'>
-<img src={TempCardIamge} className='mb-4 w-2xl h-36 rounded-md cursor-pointer'/>
+<Link to='/FavouriteMemories'><img src={TempCardIamge} className='mb-4 w-2xl h-36 rounded-md cursor-pointer'/></Link>
 <h1 className='mb-2 text-2xl font-medium'>Featured Memory</h1>
 <p className='text-center'>We do not remember days, we remember moments.</p>
 </div>
