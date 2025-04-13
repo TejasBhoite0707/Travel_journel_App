@@ -33,15 +33,9 @@ const NewStoryForm = () => {
       initialValues={{ size: componentSize }}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
-      style={{ maxWidth: 600 }}
+      style={{ maxWidth: 600 ,maxHeight:460}}
     >
-      <Form.Item label="Form Size" name="size">
-        <Radio.Group>
-          <Radio.Button value="small">Small</Radio.Button>
-          <Radio.Button value="default">Default</Radio.Button>
-          <Radio.Button value="large">Large</Radio.Button>
-        </Radio.Group>
-      </Form.Item>
+      
       <Form.Item label="Input">
         <Input />
       </Form.Item>
