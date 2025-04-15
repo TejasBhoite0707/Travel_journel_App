@@ -5,8 +5,9 @@ import Signup from "./Pages/Signup"
 import Login from "./Pages/Login"
 import Home from "./Home/Home"
 import MainPage from "./Home/MainPage"
-import TimeLine from "./Components/DashboardPages/TimeLine"
 import FavouriteMemoriesTravel from "./Components/DashboardPages/FavouriteMemories"
+
+import TimeLine from "./Components/DashboardPages/TimeLine"
 
 function App() {
   const Root=()=>{

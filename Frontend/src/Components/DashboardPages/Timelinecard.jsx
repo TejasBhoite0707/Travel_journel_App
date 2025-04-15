@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaLocationDot } from "react-icons/fa6";
-const FavouriteMemoriesTravel = () => {
+const Timelinecard = () => {
    
     const memories = [
         {
@@ -27,10 +27,7 @@ const FavouriteMemoriesTravel = () => {
   const isLong = storyWords.length > maxWords;
   const preview = storyWords.slice(0, maxWords).join(' ');
   return (
-    <div className='min-h-screen bg-gradient-to-b from-[#FFF9F3] via-[#9dc9f0] to-[#FFEFE3] px-4 py-4 flex flex-col items-center'>
-      <h1 className='text-5xl mb-10 mt-28'>Favourite Memories</h1>
-      <div className='flex flex-row '>
-      <div className='flex flex-col items-start p-7 shadow-md rounded-2xl bg-white w-xl hover:scale-[1.02]'>
+    <div className='flex flex-col items-start p-7 shadow-md rounded-2xl bg-white w-xl hover:scale-[1.02]'>
       <img src={memories[0].image} alt={memories[0].title} title={memories[0].title} className='w-xl h-60 object-cover mb-4' />
       <h2 className='mb-2 text-3xl '>{memories[0].title}</h2>
       <p className='text-xl whitespace-pre-wrap'>{
@@ -47,11 +44,7 @@ const FavouriteMemoriesTravel = () => {
         <p className='text-lg text-left'>{memories[0].visitedLocations}</p>
       </div>
     </div>
-      </div>
- 
-    </div>
-   
   )
 }
 
-export default FavouriteMemoriesTravel;
+export default Timelinecard;
