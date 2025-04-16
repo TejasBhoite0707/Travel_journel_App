@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Timeline } from 'antd';
 import Timelinecard from './Timelinecard';
+import { MdOutlineDateRange  } from "react-icons/md";
 const TimeLinecomponent = () => {
   const memories = [
           {
@@ -40,6 +41,7 @@ const TimeLinecomponent = () => {
         mode='left'
       items={memories.map((memory)=>({
         label:memory.visitedDate,
+        dot: <MdOutlineDateRange  className='bg-none' />,
         children:<Timelinecard 
         title={memory.title}
         story={memory.story}
