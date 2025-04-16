@@ -2,32 +2,50 @@ import React, { useState } from 'react';
 import { Timeline } from 'antd';
 import Timelinecard from './Timelinecard';
 const TimeLinecomponent = () => {
-  const [mode, setMode] = useState('left');
-  const onChange = e => {
-    setMode(e.target.value);
-  };
+  const memories = [
+          {
+            title: 'Travelling in Mountains',
+            story: 'A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.',
+            visitedLocations: 'Manali, Himachal Pradesh',
+            imageUrl: 'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
+            visitedDate: '2024-06-15',
+          },
+          {
+            title: 'Sunset at the Beach',
+            story: 'Captured the golden sunset on a solo trip.',
+            visitedLocations: 'Goa, India',
+            imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
+            visitedDate: '2023-12-10',
+          },
+          {
+            title: 'Travelling in Mountains',
+            story: 'A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.',
+            visitedLocations: 'Manali, Himachal Pradesh',
+            imageUrl: 'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
+            visitedDate: '2024-06-15',
+          },
+          {
+            title: 'Sunset at the Beach',
+            story: 'Captured the golden sunset on a solo trip.',
+            visitedLocations: 'Goa, India',
+            imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
+            visitedDate: '2023-12-10',
+          },
+        ];
+  
   return (
     <>
    
       <Timeline
-        mode={mode}
-        items={[
-          {
-            label: '2015-09-01',
-            children: 'Create a services',
-          },
-          {
-            label: '2015-09-01 09:12:11',
-            children: 'Solve initial network problems',
-          },
-          {
-            children: 'Technical testing',
-          },
-          {
-            label: '2015-09-01 09:12:11',
-            children: 'Network problems being solved',
-          },
-        ]}
+        mode='left'
+      items={memories.map((memory)=>({
+        label:memory.visitedDate,
+        children:<Timelinecard 
+        title={memory.title}
+        story={memory.story}
+        visitedLocations={memory.visitedLocations}
+        imageUrl={memory.imageUrl}/>,
+      }))}
       />
     </>
   );

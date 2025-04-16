@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import "tailwindcss";
 
+
+@layer utilities {
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  }
+
 body{
     font-family: 'Poppins',sans-serif;
 }
@@ -16,7 +23,7 @@ body{
            hover:bg-cyan-600 hover:text-white hover:scale-105;
   }
 .login-ui-box{
-    @apply w-96 h-[500px] rounded-full bg-gradient-to-tr;
+    @apply w-96 h-[500px] rounded-full ;
 }
  
   
