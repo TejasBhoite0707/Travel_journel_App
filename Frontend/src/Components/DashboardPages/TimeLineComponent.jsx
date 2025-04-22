@@ -41,7 +41,7 @@ const TimeLinecomponent = () => {
         mode='left'
       items={memories.map((memory)=>({
         label:memory.visitedDate,
-        dot: <MdOutlineDateRange  className='bg-none' />,
+        dot: <MdOutlineDateRange  className='bg-transparent' />,
         children:<Timelinecard 
         title={memory.title}
         story={memory.story}

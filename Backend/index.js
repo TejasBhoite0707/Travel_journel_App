@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import config from './config.json' assert{type: "json"}
 import mongoose from 'mongoose'
 import AccountCreationRouter from './Routes/CreateAcc.js'
 import upload from './multer.js'
@@ -25,7 +24,7 @@ app.use(cors({ origin: "*" }));
 
 
 try {
-    mongoose.connect(config.connectionString);
+    mongoose.connect(process.env.CONNECTION_STRING);
     console.log("connected to database");
 }
 catch (err) {
