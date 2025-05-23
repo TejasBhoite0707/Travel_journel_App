@@ -1,7 +1,12 @@
 import React from 'react';
-import {  Flex, Modal } from 'antd';
+import {  Flex, Form, Modal } from 'antd';
 import NewStoryForm from './AddNewStoryForm';
 const NewStory = ({open,onClose}) => {
+  const [form] = Form.useForm();
+  const handlePost=()=>{
+    form.submit();
+    onClose();
+  }
   return (
     <Flex vertical gap="middle" align="flex-start">
       {/* Responsive */}
@@ -13,7 +18,7 @@ const NewStory = ({open,onClose}) => {
         }
         centered
         open={open}
-        onOk={onClose}
+        onOk={handlePost}
         okText="Post"
         onCancel={onClose}
         width={{
@@ -25,7 +30,7 @@ const NewStory = ({open,onClose}) => {
           xxl: '40%',
         }}
       >
-       <NewStoryForm/>
+       <NewStoryForm form={form}/>
       </Modal>
     </Flex>
   );

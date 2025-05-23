@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Button,
   Cascader,
@@ -9,71 +9,119 @@ import {
   InputNumber,
   Radio,
   Select,
+  Space,
   Switch,
   TreeSelect,
   Upload,
 
 } from 'antd';
-const NewStoryForm = () => {
+import FormItem from 'antd/es/form/FormItem';
+import axiosInstance from '../../utils/ApiService';
+const NewStoryForm = ({form}) => {
+   
     const normFile = e => {
         if (Array.isArray(e)) {
           return e;
         }
         return e === null || e === void 0 ? void 0 : e.fileList;
       };
+
+      const onFinish=async(values)=>{
+        try {
+           const payload = {
+        title: values.title,
+        story: values.story,
+        
+        visitedLocation: values.visitedLocation,
+        visitedDate: values.visitedDate?.format('YYYY-MM-DD'),
+        isFavourite: values.isFavourite || false,
+        imageUrl: values.image,
+      };
+      console.log(payload);
+      
+      const response=await axiosInstance.post('/api/travel-story-add',payload)
+      console.log(response);
+      message.success('Story added successfully!');
+      form.resetFields();
+        } catch (error) {
+           console.error('Error submitting form:', error);
+      
+        }
+      }
   const [componentSize, setComponentSize] = useState('default');
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
   return (
     <Form
+    form={form}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       layout="horizontal"
       initialValues={{ size: componentSize }}
+      onFinish={onFinish}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
-      style={{ maxWidth: 600 ,maxHeight:460}}
+      style={{ maxWidth: 600 ,maxHeight:560}}
     >
       
-      <Form.Item label="Input">
+      <Form.Item label="Title" name='title' rules={[{required:true}]}>
         <Input />
       </Form.Item>
-      <Form.Item label="Select">
-        <Select>
-          <Select.Option value="demo">Demo</Select.Option>
-        </Select>
+
+      <Form.Item label="Story" name='story' rules={[{required:true}]}>
+         <Input.TextArea rows={4}/>
       </Form.Item>
-      <Form.Item label="TreeSelect">
-        <TreeSelect
-          treeData={[
-            { title: 'Light', value: 'light', children: [{ title: 'Bamboo', value: 'bamboo' }] },
-          ]}
-        />
+
+<Form.List name="visitedLocation" rules={[{required:true}]}>
+       {(fields,{add,remove})=>(
+        <Form.Item label='Visited Locations' required>
+        <>
+        {fields.map(({key,name,...restField})=>(
+          <Space>
+            <Form.Item
+            {...restField}
+            name={name}
+            rules={[{required:true,message:"Enter A Location"}]}
+            noStyle
+            >
+<Input placeholder='Enter the Place name'/>
+            </Form.Item>
+            <MinusCircleOutlined onClick={()=>remove(name)}/>
+          </Space>
+        ))}
+<Form.Item wrapperCol={{offset:6}}>
+<Button type='dashed' onClick={()=>add()} block icon={<PlusOutlined/>} >
+Add Place
+</Button>
+</Form.Item>
+        </>
+        </Form.Item>
+       )}
+      </Form.List>
+
+<Form.Item label="Date Visited" name='visitedDate' rules={[{required:true}]}>
+        <DatePicker />
       </Form.Item>
-      <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
-          <Upload action="/upload.do" listType="picture-card">
-            <button
+
+      <Form.Item label="Upload Image" name='image' valuePropName="fileList" getValueFromEvent={normFile}>
+          <Upload name='image' action="http://localhost:8000/api/image-upload" listType="picture-card">
+            <div
               style={{ color: 'inherit', cursor: 'inherit', border: 0, background: 'none' }}
               type="button"
             >
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Upload</div>
-            </button>
+            </div>
           </Upload>
         </Form.Item>
-      <Form.Item label="DatePicker">
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="InputNumber">
-        <InputNumber />
-      </Form.Item>
-      <Form.Item label="Switch" valuePropName="checked">
+      
+     
+      <Form.Item  valuePropName="checked" name='isFavourite' label='Favourite'>
         <Switch />
       </Form.Item>
-      <Form.Item label="Button">
-        <Button>Button</Button>
-      </Form.Item>
+
+      
     </Form>
   );
 };

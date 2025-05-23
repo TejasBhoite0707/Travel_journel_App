@@ -1,7 +1,7 @@
 import TravelStoryModel from "../Modals/TravelStory.modal.js";
 
 const TravelStoryAdd = async (req, res) => {
-    const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
+    const { title, story, visitedLocation, imageUrl, visitedDate,isFavourite} = req.body;
     const { userId } = req.user;
 
     if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
@@ -18,6 +18,7 @@ const TravelStoryAdd = async (req, res) => {
             visitedLocation,
             imageUrl,
             visitedDate: ParsedVisitedDate,
+            isFavourite,
         })
 
         await travelStory.save();
