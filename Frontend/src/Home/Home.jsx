@@ -8,9 +8,34 @@ import TempCardIamge from '../assets/images/TempImage.jpeg'
 import { Modal } from 'antd';
 import NewStory from '../Components/DashboardPages/AddNewStoryModel';
 import {  Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../utils/ApiService';
+import { useEffect } from 'react';
 const Home = () => {
   const Navigate=useNavigate();
+  const[userInfo,setUserInfo]=useState(null);
+
   const[modalOpen,setmodalOpen]=useState(false);
+
+  const getuserInfo=async()=>{
+    
+    try {
+      const response=await axiosInstance.get("/api/get-user");
+    console.log(response);
+    
+      if(response.data && response.data.user){
+        setUserInfo(response.data.user)
+      }
+    } catch (error) {
+      if(error.response.status===401){
+        localStorage.clear()
+        Navigate('/login')
+      }
+    }
+  }
+  useEffect(()=>{
+    getuserInfo();
+  },[])
+
   const FisrtTwoCards=[
     {
         id: 1,
@@ -35,10 +60,11 @@ const Home = () => {
   return (
     <div className='min-h-screen   bg-gradient-to-br from-blue-200 via-yellow-100 to-pink-100'>
     <div className='flex mb-14'>
-  <Navbar />
+  <Navbar userInfo={userInfo} />
     </div>
     <div className='mb-16 flex flex-row items-center justify-center space-x-2'>
     <h1 className='text-center text-3xl font-bold '>Welcome Back</h1>
+    
     <HiSparkles className='text-3xl text-amber-400'/>
     </div>
     
