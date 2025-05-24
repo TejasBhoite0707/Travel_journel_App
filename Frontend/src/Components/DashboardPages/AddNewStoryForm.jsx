@@ -35,7 +35,7 @@ const NewStoryForm = ({form}) => {
         visitedLocation: values.visitedLocation,
         visitedDate: values.visitedDate?.format('YYYY-MM-DD'),
         isFavourite: values.isFavourite || false,
-        imageUrl: values.image,
+        imageUrl: values.image[0].response.imageUrl,
       };
       console.log(payload);
       
@@ -105,7 +105,24 @@ Add Place
       </Form.Item>
 
       <Form.Item label="Upload Image" name='image' valuePropName="fileList" getValueFromEvent={normFile}>
-          <Upload name='image' action="http://localhost:8000/api/image-upload" listType="picture-card">
+          <Upload name='image'
+          customRequest={async({file,onSuccess,onError})=>{
+         const formData=new FormData();
+         formData.append('image',file);
+         try {
+          const response=await axiosInstance.post('/api/image-upload',formData,{
+            headers:{
+              "Content-Type":'multipart/form-data'
+            }
+          })
+          onSuccess(response.data,file)
+         } catch (err) {
+          console.error(err);
+          onError(err)
+         }
+          }}
+          
+          listType="picture-card">
             <div
               style={{ color: 'inherit', cursor: 'inherit', border: 0, background: 'none' }}
               type="button"
