@@ -55,14 +55,14 @@ const NewStoryForm = ({form}) => {
   return (
     <Form
     form={form}
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 18 }}
       layout="horizontal"
       initialValues={{ size: componentSize }}
       onFinish={onFinish}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
-      style={{ maxWidth: 600 ,maxHeight:560}}
+      
     >
       
       <Form.Item label="Title" name='title' rules={[{required:true}]}>
@@ -85,7 +85,7 @@ const NewStoryForm = ({form}) => {
             rules={[{required:true,message:"Enter A Location"}]}
             noStyle
             >
-<Input placeholder='Enter the Place name'/>
+<Input placeholder='Enter the Place name' style={{width:'250px'}}/>
             </Form.Item>
             <MinusCircleOutlined onClick={()=>remove(name)}/>
           </Space>

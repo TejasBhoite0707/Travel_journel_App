@@ -20,15 +20,19 @@ const NewStory = ({open,onClose}) => {
         open={open}
         onOk={handlePost}
         okText="Post"
+        
         onCancel={onClose}
         width={{
           xs: '90%',
           sm: '80%',
-          md: '70%',
+          md: '80%',
           lg: '60%',
           xl: '50%',
           xxl: '40%',
         }}
+        
+       style={{ top: 20 }}
+  bodyStyle={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: 24 }}
       >
        <NewStoryForm form={form}/>
       </Modal>
