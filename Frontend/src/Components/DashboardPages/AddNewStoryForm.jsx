@@ -56,7 +56,7 @@ const NewStoryForm = ({form}) => {
     <Form
     form={form}
       labelCol={{ span: 6 }}
-      wrapperCol={{ span: 18 }}
+      wrapperCol={{ span: 16 }}
       layout="horizontal"
       initialValues={{ size: componentSize }}
       onFinish={onFinish}

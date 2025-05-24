@@ -1,54 +1,60 @@
-import React, { useState } from 'react';
-import { Timeline } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Empty, Spin, Timeline } from 'antd';
 import Timelinecard from './Timelinecard';
 import { MdOutlineDateRange  } from "react-icons/md";
+import axiosInstance from '../../utils/ApiService';
+import moment from 'moment';
 const TimeLinecomponent = () => {
-  const memories = [
-          {
-            title: 'Travelling in Mountains',
-            story: 'A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.',
-            visitedLocations: 'Manali, Himachal Pradesh',
-            imageUrl: 'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
-            visitedDate: '2024-06-15',
-          },
-          {
-            title: 'Sunset at the Beach',
-            story: 'Captured the golden sunset on a solo trip.',
-            visitedLocations: 'Goa, India',
-            imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
-            visitedDate: '2023-12-10',
-          },
-          {
-            title: 'Travelling in Mountains',
-            story: 'A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.A peaceful journey through the Himalayas with friends.',
-            visitedLocations: 'Manali, Himachal Pradesh',
-            imageUrl: 'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
-            visitedDate: '2024-06-15',
-          },
-          {
-            title: 'Sunset at the Beach',
-            story: 'Captured the golden sunset on a solo trip.',
-            visitedLocations: 'Goa, India',
-            imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
-            visitedDate: '2023-12-10',
-          },
-        ];
+  const[memories,setMemories]=useState([]);
+  const[loading,setloading]=useState(true);
+
+    const fetchMemories=async()=>{
+    
+    try {
+      const response=await axiosInstance.get('/api/get-all-stories');
+      setMemories(response.data.stories);
+      console.log(response.data);
+      
+    } catch (err) {
+      console.error(err);
+    }
+    finally{
+      setloading(false)
+    }
+
+    }
+  useEffect(()=>{
+    fetchMemories();
+  },[])
+  
+    console.log(memories);
+    
+  
+  if(loading) return <Spin tip="Loading travel stories..."></Spin>
+  if(!memories.length) return <Empty description="No memories yet!" />;
+  
   
   return (
     <>
    
-      <Timeline
-        mode='left'
-      items={memories.map((memory)=>({
-        label:memory.visitedDate,
-        dot: <MdOutlineDateRange  className='bg-transparent' />,
-        children:<Timelinecard 
-        title={memory.title}
-        story={memory.story}
-        visitedLocations={memory.visitedLocations}
-        imageUrl={memory.imageUrl}/>,
-      }))}
-      />
+     <Timeline
+  mode='left'
+  items={[...memories]
+    .sort((a, b) => new Date(b.visitedDate) - new Date(a.visitedDate)) // ✅ descending order
+    .map((memory) => ({
+      label: `${memory.visitedDate ? moment(memory.visitedDate).format("Do MMM YYYY") : ""}`,
+      dot: <MdOutlineDateRange className='bg-transparent' />,
+      children: (
+        <Timelinecard
+          title={memory.title}
+          story={memory.story}
+          visitedLocations={memory.visitedLocation}
+          imageUrl={memory.imageUrl}
+        />
+      ),
+    }))}
+></Timeline>
+
     </>
   );
 };

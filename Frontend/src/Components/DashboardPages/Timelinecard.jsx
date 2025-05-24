@@ -26,7 +26,7 @@ const Timelinecard = ({title,story,visitedLocations,imageUrl,visitedDate}) => {
         }
       <div className='mb-2 flex flex-row text-left items-center space-x-3'>
         <FaLocationDot className='text-blue-400 text-xl'/>
-        <p className='text-lg text-left'>{visitedLocations}</p>
+        <p className='text-lg text-left'>{Array.isArray(visitedLocations)?visitedLocations.join(' , '):visitedLocations}</p>
       </div>
     </div>
   )
