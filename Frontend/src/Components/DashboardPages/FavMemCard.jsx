@@ -1,7 +1,9 @@
+import moment from 'moment';
 import { useState } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { MdOutlineDateRange } from 'react-icons/md';
 
-const FavouriteMemoryCard = ({ title, story, visitedLocations, imageUrl }) => {
+const FavouriteMemoryCard = ({ title, story, visitedLocation, imageUrl ,visitedDate}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
@@ -33,8 +35,13 @@ const FavouriteMemoryCard = ({ title, story, visitedLocations, imageUrl }) => {
 
         <div className="flex items-center text-gray-500 text-sm">
           <FaMapMarkerAlt className="text-red-500 mr-2" />
-          <span>{visitedLocations}</span>
+          <span>{visitedLocation}</span>
         </div>
+ <div className="flex items-center text-gray-500 text-sm mt-2">
+      <MdOutlineDateRange className="text-blue-500 mr-2" />
+      <span>{visitedDate ? moment(visitedDate).format("Do MMM YYYY") : 'Unknown date'}</span>
+    </div>
+
       </div>
     </div>
   );

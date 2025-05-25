@@ -1,48 +1,37 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import FavouriteMemoryCard from './FavMemCard'
+import { useState } from 'react'
+import axiosInstance from '../../utils/ApiService'
+import { useEffect } from 'react'
+import { Empty, Spin } from 'antd'
 
 const FavouriteMemoriesTravel = () => {
-  const memories = [
-    {
-      title: 'Travelling in Mountains',
-      story:
-        'A peaceful journey through the Himalayas with friends. From misty mornings to starry nights, the experience was magical.',
-      visitedLocations: 'Manali, Himachal Pradesh ',
-      imageUrl:
-        'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
-      visitedDate: '2024-06-15',
-    },
-    {
-      title: 'Sunset at the Beach',
-      story:
-        'Captured the golden sunset on a solo trip. The waves, breeze, and calm made it unforgettable.',
-      visitedLocations: 'Goa, India',
-      imageUrl:
-        'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
-      visitedDate: '2023-12-10',
-    },
-    {
-      title: 'Travelling in Mountains',
-      story:
-        'A peaceful journey through the Himalayas with friends. From misty mornings to starry nights, the experience was magical.',
-      visitedLocations: 'Manali, Himachal Pradesh ',
-      imageUrl:
-        'https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2018/05/solo-traveller-and-mountains-in-europe-1527585993.jpg',
-      visitedDate: '2024-06-15',
-    },
-    {
-      title: 'Sunset at the Beach',
-      story:
-        'Captured the golden sunset on a solo trip. The waves, breeze, and calm made it unforgettable.',
-      visitedLocations: 'Goa, India',
-      imageUrl:
-        'https://static.vecteezy.com/system/resources/thumbnails/012/168/187/small/beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation-free-photo.JPG',
-      visitedDate: '2023-12-10',
-    },
-    // Add more as needed...
-  ]
+   const [favouriteMemories, setFavouriteMemories] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const favouriteMemorie=[]
+  const FetchFavouriteMemories=async()=>{
+   
 
+    try {
+      const response=await axiosInstance.get('/api/get-all-stories');
+      setFavouriteMemories(response.data.stories)
+      console.log(response.data);
+      
+    } catch (err) {
+      console.error(err);
+    } finally{
+setLoading(false)
+    }
+
+  }
+useEffect(()=>{
+FetchFavouriteMemories()
+},[])
+  
+if(loading) return <Spin tip="Loading travel stories..."></Spin>
+if(!favouriteMemories.length) return <Empty description="No memories yet!" />;
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-yellow-100 to-pink-100 px-6 py-12 flex flex-col items-center">
 
@@ -80,7 +69,9 @@ const FavouriteMemoriesTravel = () => {
           },
         }}
       >
-        {memories.map((memory, index) => (
+        {[...favouriteMemories].filter(memory=>memory.isFavourite)
+        .sort((a,b)=>new Date(b.visitedDate)-new Date(a.visitedDate))
+        .map((memory, index) => (
           <motion.div
             key={index}
             variants={{
@@ -92,8 +83,9 @@ const FavouriteMemoriesTravel = () => {
             <FavouriteMemoryCard
               title={memory.title}
               story={memory.story}
-              visitedLocations={memory.visitedLocations}
+              visitedLocation={memory.visitedLocation}
               imageUrl={memory.imageUrl}
+              visitedDate={memory.visitedDate}
             />
           </motion.div>
         ))}
