@@ -1,9 +1,9 @@
 import React from 'react';
-import {  Flex, Form, Modal } from 'antd';
+import { Flex, Form, Modal } from 'antd';
 import NewStoryForm from './AddNewStoryForm';
-const NewStory = ({open,onClose}) => {
+const NewStory = ({ open, onClose }) => {
   const [form] = Form.useForm();
-  const handlePost=()=>{
+  const handlePost = () => {
     form.submit();
     onClose();
   }
@@ -12,15 +12,15 @@ const NewStory = ({open,onClose}) => {
       {/* Responsive */}
       <Modal
         title={
-            <div className='text-2xl'>
-                Add New Memory
-            </div>
+          <div className='text-2xl'>
+            Add New Memory
+          </div>
         }
         centered
         open={open}
         onOk={handlePost}
         okText="Post"
-        
+
         onCancel={onClose}
         width={{
           xs: '90%',
@@ -30,11 +30,11 @@ const NewStory = ({open,onClose}) => {
           xl: '50%',
           xxl: '40%',
         }}
-        
-       style={{ top: 20 }}
-  bodyStyle={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: 24 }}
+
+        style={{ top: 20 }}
+        bodyStyle={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: 24 }}
       >
-       <NewStoryForm form={form}/>
+        <NewStoryForm form={form} mode='add' onSuccess={onClose} />
       </Modal>
     </Flex>
   );

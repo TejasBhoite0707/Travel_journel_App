@@ -34,12 +34,12 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       form.resetFields()
       form.setFieldsValue(transformedValues);
       console.log(transformedValues);
-      
+
     }
-    
-    
+
+
   }, [initialValues, form, mode]);
- 
+
   const normFile = e => {
     if (Array.isArray(e)) {
       return e;
@@ -58,9 +58,9 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       isFavourite: values.isFavourite || false,
       imageUrl: values.image[0].url,
     };
-     
 
-   
+
+
     try {
       if (mode === 'edit') {
         await axiosInstance.put(`api/edit-travel/${initialValues._id}`, payload)
@@ -166,7 +166,7 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       <Form.Item valuePropName="checked" name='isFavourite' label='Favourite'>
         <Switch />
       </Form.Item>
-     
+
 
     </Form>
   );

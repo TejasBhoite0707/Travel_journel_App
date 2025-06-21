@@ -13,7 +13,7 @@ const TimeLinecomponent = () => {
   const [editingStory, setEditingStory] = useState(null)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [form] = Form.useForm();
-  const[formKey,setFormKey]=useState(0)
+  const [formKey, setFormKey] = useState(0)
 
   const fetchMemories = async () => {
 
@@ -59,13 +59,13 @@ const TimeLinecomponent = () => {
 
   const handleEditClick = (storyData) => {
     setEditingStory(storyData);
-    setFormKey(prev=>prev+1)
+    setFormKey(prev => prev + 1)
     setIsEditModalOpen(true)
   }
-const handleCancel=()=>{
+  const handleCancel = () => {
 
-  setIsEditModalOpen(false);
-}
+    setIsEditModalOpen(false);
+  }
 
 
   return (
@@ -101,7 +101,7 @@ const handleCancel=()=>{
         open={isEditModalOpen}
         key={formKey}
         onCancel={handleCancel}
-        onOk={()=>form.submit()}
+        onOk={() => form.submit()}
         okText="Update Story"
       >
         <NewStoryForm

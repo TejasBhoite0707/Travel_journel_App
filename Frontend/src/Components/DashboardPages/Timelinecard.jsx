@@ -10,7 +10,7 @@ const Timelinecard = ({
   visitedDate,
   isFavourite,
   onFavouriteToggle,
-  onEdit // 👈 new prop
+  onEdit
 }) => {
 
   const [showFullStory, setShowFullStory] = useState(false);
