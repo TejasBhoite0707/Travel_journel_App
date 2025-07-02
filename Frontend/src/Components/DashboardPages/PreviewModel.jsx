@@ -82,16 +82,16 @@ const handleImageDownload=async()=>{
         <div
           className={`relative ${theme.bg} ${theme.text} rounded-xl overflow-hidden shadow-xl ${theme.shadow}`}
         >
-          {/* Theme Toggle */}
+        
           <button
-            className="absolute top-4 right-4 z-50 rounded-full p-2 backdrop-blur-md bg-white/40 dark:bg-slate-700/40 hover:scale-110 transition"
+            className="absolute top-4 right-4 z-50 rounded-full p-2 backdrop-blur-md bg-blue-600 dark:bg-slate-700/40 hover:scale-110 transition"
             onClick={() => setDark(!dark)}
             title="Toggle theme"
           >
             {dark ? <MdWbSunny className="text-yellow-400" /> : <MdNightlightRound />}
           </button>
 
-          {/* Favourite Toggle */}
+          
           <button
             className="absolute top-4 left-4 z-50 text-4xl text-red-500 drop-shadow-md hover:scale-110 transition"
             onClick={toggleFav}
@@ -100,7 +100,7 @@ const handleImageDownload=async()=>{
             {data.isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
 
-          {/* Media */}
+          
           {Array.isArray(data.imageUrls) && data.imageUrls.length > 0 ? (
             <Carousel
               autoPlay
