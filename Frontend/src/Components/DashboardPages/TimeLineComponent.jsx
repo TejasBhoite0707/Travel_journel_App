@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import moment from 'moment';
 import FormItem from 'antd/es/form/FormItem';
 import NewStoryForm from './AddNewStoryForm';
+import PreviewModelFn from './PreviewModel';
 const TimeLinecomponent = () => {
   const [memories, setMemories] = useState([]);
   const [loading, setloading] = useState(true);
@@ -14,6 +15,8 @@ const TimeLinecomponent = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [form] = Form.useForm();
   const [formKey, setFormKey] = useState(0)
+  const[previewStory,setPreviewStory]=useState(null);
+  const[ispreviewOpen,setPreviewOpen]=useState(false);
 
   const fetchMemories = async () => {
 
@@ -92,6 +95,10 @@ const TimeLinecomponent = () => {
                   UpdateIsFavourite(memory._id, newValue)
                 }
                 onEdit={() => handleEditClick(memory)}
+                onPreview={()=>{
+                  setPreviewStory(memory)
+                  setPreviewOpen(true)
+                }}
               />
             ),
           }))}
@@ -117,6 +124,14 @@ const TimeLinecomponent = () => {
         />
 
       </Modal>
+      <PreviewModelFn
+      open={ispreviewOpen}
+      onClose={()=>setPreviewOpen(false)}
+      story={previewStory}
+      onUpdateFavourite={UpdateIsFavourite}
+      />
+
+      
     </>
   );
 };
