@@ -31,7 +31,7 @@ FetchFavouriteMemories()
 },[])
   
 if(loading) return <Spin tip="Loading travel stories..."></Spin>
-if(!favouriteMemories.length) return <Empty description="No memories yet!" />;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-yellow-100 to-pink-100 px-6 py-12 flex flex-col items-center">
 
@@ -56,7 +56,8 @@ if(!favouriteMemories.length) return <Empty description="No memories yet!" />;
       </motion.p>
 
       {/* Animated Grid of Cards */}
-      <motion.div
+   {!favouriteMemories.length ? <Empty  description="No memories yet!" />:(
+<motion.div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-6xl"
         initial="hidden"
         animate="visible"
@@ -90,6 +91,8 @@ if(!favouriteMemories.length) return <Empty description="No memories yet!" />;
           </motion.div>
         ))}
       </motion.div>
+   )}
+      
 
     </div>
   )

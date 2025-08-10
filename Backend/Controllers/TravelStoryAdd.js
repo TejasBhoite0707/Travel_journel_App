@@ -8,7 +8,7 @@ const TravelStoryAdd = async (req, res) => {
         res.status(400).json({ error: true, message: "Please fill all the details" });
     }
 
- //   const ParsedVisitedDate = new Date(parseInt(visitedDate));
+    const ParsedVisitedDate = new Date(parseInt(visitedDate));
 
     try {
         const travelStory = new TravelStoryModel({
@@ -17,7 +17,7 @@ const TravelStoryAdd = async (req, res) => {
             userId,
             visitedLocation,
             imageUrl,
-            visitedDate,
+            visitedDate:ParsedVisitedDate,
             isFavourite,
         })
 
