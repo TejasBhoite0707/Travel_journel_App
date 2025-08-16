@@ -108,8 +108,8 @@ try {
   }
   
   return (
-    <div className='h-screen bg-cyan-50 overflow-hidden relative'>
-    <Toaster
+    <div className="h-screen bg-cyan-50 overflow-hidden relative">
+     <Toaster
     position="top-center"
     reverseOrder={false}
     toastOptions={{
@@ -135,80 +135,95 @@ try {
     }}
   />
 
-<div className=' login-ui-box from-cyan-400 to-blue-600 absolute rotate-[30deg] right-[-80px] top-[-100px] blur-2xl opacity-60 animate-pulse' />
-<div className='login-ui-box from-blue-500 to-indigo-600 absolute rotate-[45deg] bottom-[-100px] left-[-80px] blur-2xl opacity-60 animate-pulse' />
+  {/* Background effects */}
+  <div className="login-ui-box from-cyan-400 to-blue-600 absolute rotate-[30deg] right-[-80px] top-[-100px] blur-2xl opacity-60 animate-pulse" />
+  <div className="login-ui-box from-blue-500 to-indigo-600 absolute rotate-[45deg] bottom-[-100px] left-[-80px] blur-2xl opacity-60 animate-pulse" />
 
-      <div className='container h-screen flex items-center justify-center px-20 mx-auto'>
-        <div className='w-2/4 h-[90vh] flex items-end  bg-cover bg-center rounded-lg p-10 z-50' style={{backgroundImage:  `url(${bgImage})`}} >
-          <div className='relative z-10 p-10 text-white'>
-          <h4 className='text-5xl font-bold leading-tight drop-shadow-2xl text-[#F5E9DC]'>
-          {taglines[index].title}
-    </h4>
-    <p className='text-[19px] mt-4 leading-relaxed max-w-md drop-shadow-sm text-[#FFF9C4]'>
-    {taglines[index].description}
-    </p>
-          </div>
-        </div>
-        <div className='w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200/20'>
-  <form onSubmit={handleSignup}>
-    <h4 className='text-3xl font-bold mb-7 text-gray-800'>Create Your Account</h4>
-<input
-type='text'
-value={fullname}
-onChange={(e)=>setFullname(e.target.value)}
-name='fullname'
-placeholder='Enter Your Full Name'
-className='input-box w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200'
-/>
-<br/>
-    <input
-      type='text'
-      value={email}
-      onChange={(e)=>setEmail(e.target.value)}
-      name='email'
-      placeholder='Enter your Email'
-      className='input-box w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200'
-    /><br />
-<div className='relative'>
-<input
-      type={showpassword ?  'text':'password'}
-      value={password}
-      onChange={(e)=>setPassword(e.target.value)}
-      name='password'
-      placeholder='Enter your Password'
-      className='input-box w-full px-4 py-3 mb-6 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200'
-    />
-    <div className=' absolute right-4 top-1/3 transform -translate-y-1/2 text-gray-500 cursor-pointer'
-    onClick={()=>setShowpassword(!showpassword)}
-    >
-{!showpassword?<FaEyeSlash/>:<FaEye/>}
-    </div>
-</div>
-{/* {error && <p className='text-red-500 text-xs pb-0'>{error}</p>} */}
-   <br />
-
-    <input
-      type='submit'
-      value='CREATE ACCOUNT'
-      className='btn-primary w-full py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-all duration-200 font-semibold cursor-pointer'
-    />
-
-    <p className='text-xs text-center my-4 text-slate-500'>Or</p>
-
+  {/* Main container */}
+  <div className="container h-screen flex flex-col lg:flex-row items-center justify-center px-4 sm:px-8 lg:px-20 mx-auto">
     
-  </form>
-  <input
- 
-  value="LOGIN"
-  onClick={() => navigate('/login')}
-  className="btn-primary w-full py-3 bg-[#00C4E5] text-white rounded-full text-sm font-bold text-center 
-             hover:bg-[#00B2D4] transition-all duration-200 cursor-pointer
-             flex items-center justify-center shadow-md"
-/>
-</div>
-
+    {/* Left side (image + text) */}
+    <div
+      className="w-full md:w-2/4 h-[40vh] md:h-[90vh] flex items-end bg-cover bg-center rounded-t-lg lg:rounded-lg p-6 sm:p-10 z-50"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <div className="relative z-10 p-4 sm:p-8 text-white">
+        <h4 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight drop-shadow-2xl text-[#F5E9DC]">
+          {taglines[index].title}
+        </h4>
+        <p className="text-sm sm:text-base lg:text-lg mt-4 leading-relaxed max-w-md drop-shadow-sm text-[#FFF9C4]">
+          {taglines[index].description}
+        </p>
       </div>
     </div>
+
+    {/* Right side (form) */}
+    <div className="w-full md:w-2/4 h-auto md:h-[75vh] bg-white rounded-b-lg lg:rounded-r-lg relative p-6 sm:p-10 lg:p-16 shadow-lg shadow-cyan-200/20">
+      <form onSubmit={handleSignup}>
+        <h4 className="text-2xl sm:text-3xl font-bold mb-7 text-gray-800">
+          Create Your Account
+        </h4>
+
+        {/* Fullname */}
+        <input
+          type="text"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
+          name="fullname"
+          placeholder="Enter Your Full Name"
+          className="input-box w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200"
+        />
+
+        {/* Email */}
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          placeholder="Enter your Email"
+          className="input-box w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200"
+        />
+
+        {/* Password */}
+        <div className="relative">
+          <input
+            type={showpassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            placeholder="Enter your Password"
+            className="input-box w-full px-4 py-3 mb-6 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-200"
+          />
+          <div
+            className="absolute right-4 top-1/3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+            onClick={() => setShowpassword(!showpassword)}
+          >
+            {!showpassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
+
+        {/* Signup button */}
+        <input
+          type="submit"
+          value="CREATE ACCOUNT"
+          className="btn-primary w-full py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-all duration-200 font-semibold cursor-pointer"
+        />
+
+        <p className="text-xs text-center my-4 text-slate-500">Or</p>
+      </form>
+
+      {/* Login button */}
+      <input
+        value="LOGIN"
+        onClick={() => navigate("/login")}
+        className="btn-primary w-full py-3 bg-[#00C4E5] text-white rounded-full text-sm font-bold text-center 
+                   hover:bg-[#00B2D4] transition-all duration-200 cursor-pointer
+                   flex items-center justify-center shadow-md"
+      />
+    </div>
+  </div>
+</div>
+
   )
 }
 
