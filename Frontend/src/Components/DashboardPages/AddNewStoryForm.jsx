@@ -30,7 +30,7 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
         isFavourite: initialValues.isFavourite || false,
         image: initialValues.imageUrl ? [{ url: initialValues.imageUrl, name: 'Uploaded Image', status: 'done' }] : [],
       }
-      console.log(transformedValues);
+      
       form.resetFields()
       form.setFieldsValue(transformedValues);
       console.log(transformedValues);
@@ -56,9 +56,10 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       visitedLocation: values.visitedLocation,
       visitedDate: values.visitedDate?.format('YYYY-MM-DD'),
       isFavourite: values.isFavourite || false,
-      imageUrl: values.image[0].url,
+      imageUrl: values.image[0].response.imageUrl,
     };
 
+console.log(payload);
 
 
     try {

@@ -5,7 +5,7 @@ const TravelStoryAdd = async (req, res) => {
     const { userId } = req.user;
 
     if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
-        res.status(400).json({ error: true, message: "Please fill all the details" });
+      return  res.status(400).json({ error: true, message: "Please fill all the details" });
     }
 
     const ParsedVisitedDate = new Date(parseInt(visitedDate));
@@ -22,10 +22,10 @@ const TravelStoryAdd = async (req, res) => {
         })
 
         await travelStory.save();
-        res.status(201).json({ story: travelStory, message: "Story Added Successfully" })
+       return res.status(201).json({ story: travelStory, message: "Story Added Successfully" })
 
     } catch (err) {
-        res.status(400).json({ error: true, message: err.message })
+      return  res.status(400).json({ error: true, message: err.message })
     }
 
 }
