@@ -88,7 +88,7 @@ const TimeLine = () => {
         className="flex items-center justify-center min-h-[60vh] px-2"
       >
         <div className="w-full max-w-5xl">
-          <TimeLinecomponent Filteredstories={Filteredstories} />
+          <TimeLinecomponent Filteredstories={Filteredstories.length>0? Filteredstories:undefined} />
         </div>
       </motion.div>
     </div>
