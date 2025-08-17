@@ -54,7 +54,7 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       story: values.story,
 
       visitedLocation: values.visitedLocation,
-      visitedDate: values.visitedDate?.format('YYYY-MM-DD'),
+      visitedDate: values.visitedDate?values.visitedDate.toISOString() : null,
       isFavourite: values.isFavourite || false,
       imageUrl: values.image[0].response.imageUrl,
     };

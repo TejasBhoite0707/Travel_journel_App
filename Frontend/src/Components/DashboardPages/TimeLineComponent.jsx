@@ -8,7 +8,7 @@ import moment from 'moment';
 import FormItem from 'antd/es/form/FormItem';
 import NewStoryForm from './AddNewStoryForm';
 import PreviewModelFn from './PreviewModel';
-const TimeLinecomponent = () => {
+const TimeLinecomponent = ({Filteredstories}) => {
   const [memories, setMemories] = useState([]);
   const [loading, setloading] = useState(true);
   const [editingStory, setEditingStory] = useState(null)
@@ -34,8 +34,15 @@ const TimeLinecomponent = () => {
 
   }
   useEffect(() => {
-    fetchMemories();
-  }, [])
+    if(Filteredstories!=undefined){
+     setMemories(Filteredstories);
+     setloading(false);
+    }
+    else{
+fetchMemories();
+    }
+
+  }, [Filteredstories])
 
   const UpdateIsFavourite = async (storyId, newValue) => {
     try {

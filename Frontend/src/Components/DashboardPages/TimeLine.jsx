@@ -10,7 +10,7 @@ const TimeLine = () => {
   const [dates, setDates] = useState([])
   const [startDate, SetstartDate] = useState(null)
   const [endDate, SetendDate] = useState(null)
-
+  const[Filteredstories,setFilteredStories]=useState([]);
   const handleDates = (dates, DatesStrings) => {
     setDates(dates)
     SetstartDate(DatesStrings[0])
@@ -19,8 +19,8 @@ const TimeLine = () => {
   }
 
   const handleFilterStories = async () => {
-    const paresedSDate = new Date(parseInt(startDate))
-    const paresedEDate = new Date(parseInt(endDate))
+    const paresedSDate = new Date(startDate)
+    const paresedEDate = new Date(endDate)
     console.log(paresedEDate, paresedSDate)
 
     try {
@@ -30,7 +30,10 @@ const TimeLine = () => {
           endDate: paresedEDate
         }
       })
-      console.log(response)
+      console.log(response.data.stories)
+      setFilteredStories(response.data.stories);
+      console.log(stories);
+      
     } catch (error) {
       console.error('Error While fetching stories', error)
     }
@@ -85,7 +88,7 @@ const TimeLine = () => {
         className="flex items-center justify-center min-h-[60vh] px-2"
       >
         <div className="w-full max-w-5xl">
-          <TimeLinecomponent />
+          <TimeLinecomponent Filteredstories={Filteredstories} />
         </div>
       </motion.div>
     </div>
