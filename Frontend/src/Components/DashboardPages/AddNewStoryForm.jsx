@@ -49,6 +49,18 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
 
   const onFinish = async (values) => {
 
+let imageUrl = "";
+  if (values.image && values.image.length > 0) {
+    const file = values.image[0];
+    if (file.response && file.response.imageUrl) {
+      // Newly uploaded
+      imageUrl = file.response.imageUrl;
+    } else if (file.url) {
+      // Existing image when editing
+      imageUrl = file.url;
+    }
+  }
+
     const payload = {
       title: values.title,
       story: values.story,
@@ -56,7 +68,7 @@ const NewStoryForm = ({ form, mode = 'add', initialValues = {}, onSuccess }) => 
       visitedLocation: values.visitedLocation,
       visitedDate: values.visitedDate?values.visitedDate.toISOString() : null,
       isFavourite: values.isFavourite || false,
-      imageUrl: values.image[0].response.imageUrl,
+      imageUrl,
     };
 
 console.log(payload);

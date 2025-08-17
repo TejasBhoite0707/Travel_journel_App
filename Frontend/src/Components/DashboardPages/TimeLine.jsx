@@ -32,12 +32,17 @@ const TimeLine = () => {
       })
       console.log(response.data.stories)
       setFilteredStories(response.data.stories);
-      console.log(stories);
+      //console.log(stories);
       
     } catch (error) {
       console.error('Error While fetching stories', error)
     }
   }
+const  handleCancelFilter=()=>{
+  setFilteredStories([]);
+  SetstartDate(null);
+  SetendDate(null);
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-yellow-100 to-pink-100 px-4 sm:px-8 lg:px-20 py-6 sm:py-10">
@@ -68,6 +73,14 @@ const TimeLine = () => {
             >
               Filter
             </button>
+            {
+              Filteredstories.length>0 && (
+<button className='bg-gray-400 text-white px-4 py-2 rounded-lg' onClick={handleCancelFilter}>
+              Clear
+            </button>
+              )
+            }
+            
           </Space>
         </div>
 
@@ -80,17 +93,19 @@ const TimeLine = () => {
       </div>
 
       {/* Timeline Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-        viewport={{ once: true }}
-        className="flex items-center justify-center min-h-[60vh] px-2"
-      >
-        <div className="w-full max-w-5xl">
-          <TimeLinecomponent Filteredstories={Filteredstories.length>0? Filteredstories:undefined} />
-        </div>
-      </motion.div>
+      {/* Timeline Content */}
+<motion.div
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, ease: 'easeOut' }}
+  viewport={{ once: true }}
+  className="flex items-center justify-center min-h-screen px-2"
+>
+  <div className="w-full max-w-5xl">
+    <TimeLinecomponent Filteredstories={Filteredstories.length > 0 ? Filteredstories : undefined} />
+  </div>
+</motion.div>
+
     </div>
   )
 }
