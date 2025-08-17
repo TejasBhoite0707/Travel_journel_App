@@ -55,85 +55,110 @@ const Navbar = ({ userInfo }) => {
   }
 
   return (
-    <div className=' flex bg-white m-5 h-12 w-full  rounded-md z-10 justify-between items-center'>
-      <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
-      <Link to='/dashboard'><div className='flex space-x-1 items-center ml-14'>
-        <VscBook className='text-3xl text-gray-400' />
-        <span className='text-xl text-cyan-950 font-bold'>MemoryVault</span>
-      </div></Link>
-      <div className='flex space-x-1 items-center mr-16'>
-        <BiSolidUserRectangle className='text-2xl cursor-pointer' onClick={showModal} />
-        <Popconfirm
-          title='Are you sure you want to logout?'
-          onConfirm={confirmLogout}
-          onCancel={CancelLogout}
-          okText="Yes"
-          cancelText="No"
-        >
-          <span className='text-md text-red-500 hover:underline cursor-pointer'>Logout</span>
-        </Popconfirm>
+    <div className="flex bg-white m-3 sm:m-5 h-12 sm:h-14 w-full rounded-md z-10 justify-between items-center px-4 sm:px-8 md:px-14">
+  <Toaster position="top-center" reverseOrder={false} />
 
-      </div>
-      <Modal
-        title="User Info"
-        open={isModalopen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-  footer={
-    !showPasswordForm
-      ? [
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="ok" type="primary" onClick={handleOk}>
-            OK
-          </Button>,
-        ]
-      : null // hide footer when form is visible
-  }
-      >
-        {!showPasswordForm ? (
-          <>
-          <p><strong>Fullname: </strong>{userInfo?.fullname || 'NA'}</p>
-          <p><strong>Email: </strong>{userInfo?.email || 'NA'}</p>
-          <p type='link' style={{cursor:'pointer',color:'blue'}} onClick={() => setShowPasswordForm(true)}>Change Password</p>
-        </>
-        ) : (
-          <Form
-            layout='vertical'
-            form={form}
-            onFinish={handlePasswordChange}
-          >
-            <FormItem
-              label='Old Password'
-              name='oldPassword'
-              rules={[{ required: true, message: "Please Enter the Message" }]}
-            >
-              <Input.Password />
-            </FormItem>
-
-            <FormItem
-              label='New Password'
-              name='newPassword'
-              rules={[{ required: true, message: "Please Enter the Message" }, { min: 6, message: "Password must be at least 6 characters" }]}
-            >
-              <Input.Password />
-            </FormItem>
-            <FormItem>
-              <Button type='primary' htmlType='submit' loading={loading} style={{ marginRight: 8 }}>Update Password</Button>
-              <Button onClick={() => setShowPasswordForm(false)}>Cancel</Button>
-            </FormItem>
-          </Form>
-        )}
-
-
-
-      </Modal>
-
+  {/* Left Logo Section */}
+  <Link to="/dashboard">
+    <div className="flex space-x-1 items-center">
+      <VscBook className="text-2xl sm:text-3xl text-gray-400" />
+      <span className="text-lg sm:text-xl md:text-2xl text-cyan-950 font-bold">
+        MemoryVault
+      </span>
     </div>
+  </Link>
+
+  {/* Right User Section */}
+  <div className="flex space-x-2 items-center">
+    <BiSolidUserRectangle
+      className="text-xl sm:text-2xl cursor-pointer"
+      onClick={showModal}
+    />
+    <Popconfirm
+      title="Are you sure you want to logout?"
+      onConfirm={confirmLogout}
+      onCancel={CancelLogout}
+      okText="Yes"
+      cancelText="No"
+    >
+      <span className="text-sm sm:text-md text-red-500 hover:underline cursor-pointer">
+        Logout
+      </span>
+    </Popconfirm>
+  </div>
+
+  {/* User Info Modal */}
+  <Modal
+    title="User Info"
+    open={isModalopen}
+    onOk={handleOk}
+    onCancel={handleCancel}
+    footer={
+      !showPasswordForm
+        ? [
+            <Button key="cancel" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button key="ok" type="primary" onClick={handleOk}>
+              OK
+            </Button>,
+          ]
+        : null
+    }
+  >
+    {!showPasswordForm ? (
+      <>
+        <p>
+          <strong>Fullname: </strong>
+          {userInfo?.fullname || "NA"}
+        </p>
+        <p>
+          <strong>Email: </strong>
+          {userInfo?.email || "NA"}
+        </p>
+        <p
+          style={{ cursor: "pointer", color: "blue" }}
+          onClick={() => setShowPasswordForm(true)}
+        >
+          Change Password
+        </p>
+      </>
+    ) : (
+      <Form layout="vertical" form={form} onFinish={handlePasswordChange}>
+        <FormItem
+          label="Old Password"
+          name="oldPassword"
+          rules={[{ required: true, message: "Please Enter the Old Password" }]}
+        >
+          <Input.Password />
+        </FormItem>
+
+        <FormItem
+          label="New Password"
+          name="newPassword"
+          rules={[
+            { required: true, message: "Please Enter the New Password" },
+            { min: 6, message: "Password must be at least 6 characters" },
+          ]}
+        >
+          <Input.Password />
+        </FormItem>
+        <FormItem>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            style={{ marginRight: 8 }}
+          >
+            Update Password
+          </Button>
+          <Button onClick={() => setShowPasswordForm(false)}>Cancel</Button>
+        </FormItem>
+      </Form>
+    )}
+  </Modal>
+</div>
+
   )
 }
 

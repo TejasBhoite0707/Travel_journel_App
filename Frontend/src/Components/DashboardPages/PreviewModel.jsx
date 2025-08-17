@@ -51,22 +51,22 @@ const PreviewModal = ({ open, onClose, story, onUpdateFavourite }) => {
 
   if (!data) return null;
 
-const handleImageDownload=async()=>{
+  const handleImageDownload = async () => {
     try {
-        const response=await fetch(data.imageUrl);
-        const blob=await response.blob();
-        const url=window.URL.createObjectURL(blob);
-        const a=document.createElement('a');
-        a.href=url;
-        a.download=`memory-${data.title}.jpg`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
+      const response = await fetch(data.imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `memory-${data.title}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
     } catch (err) {
-        toast.error("Failed To Download Image")
+      toast.error("Failed To Download Image");
     }
-}
+  };
 
   return (
     <div className={dark ? "dark" : ""}>
@@ -74,92 +74,107 @@ const handleImageDownload=async()=>{
         open={open}
         onCancel={onClose}
         footer={null}
-        width="90vw"
+        width="95vw"
         style={{ top: 10, padding: 0 }}
         bodyStyle={{ padding: 0, background: "transparent" }}
         className="preview-modal"
       >
         <div
-          className={`relative ${theme.bg} ${theme.text} rounded-xl overflow-hidden shadow-xl ${theme.shadow}`}
+          className={`relative ${theme.bg} ${theme.text} rounded-xl overflow-hidden shadow-2xl ${theme.shadow}`}
         >
-        
+          {/* Toggle theme */}
           <button
-            className="absolute top-4 right-4 z-50 rounded-full p-2 backdrop-blur-md bg-blue-600 dark:bg-slate-700/40 hover:scale-110 transition"
+            className="absolute top-3 right-3 z-50 rounded-full p-2 backdrop-blur-md bg-blue-600 dark:bg-slate-700/40 hover:scale-110 transition"
             onClick={() => setDark(!dark)}
             title="Toggle theme"
           >
-            {dark ? <MdWbSunny className="text-yellow-400" /> : <MdNightlightRound />}
+            {dark ? (
+              <MdWbSunny className="text-yellow-400" />
+            ) : (
+              <MdNightlightRound />
+            )}
           </button>
 
-          
+          {/* Favourite */}
           <button
-            className="absolute top-4 left-4 z-50 text-4xl text-red-500 drop-shadow-md hover:scale-110 transition"
+            className="absolute top-3 left-3 z-50 text-3xl text-red-500 drop-shadow-md hover:scale-110 transition"
             onClick={toggleFav}
             title="Toggle favourite"
           >
             {data.isFavourite ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
 
-          
+          {/* Image Carousel */}
           {Array.isArray(data.imageUrls) && data.imageUrls.length > 0 ? (
             <Carousel
               autoPlay
               infiniteLoop
               showStatus={false}
               showThumbs={false}
-              className="max-h-[60vh]"
+              className="max-h-[65vh] sm:max-h-[70vh]"
             >
               {data.imageUrls.map((u, i) => (
-                <img key={i} src={u} alt={`slide-${i}`} className="object-cover h-[60vh]" />
+                <img
+                  key={i}
+                  src={u}
+                  alt={`slide-${i}`}
+                  className="object-cover w-full h-auto max-h-[65vh]"
+                />
               ))}
             </Carousel>
           ) : (
             <img
               src={data.imageUrl}
               alt={data.title}
-              className="w-full object-cover max-h-[60vh]"
+              className="w-full object-cover h-auto max-h-[65vh]"
             />
           )}
 
           {/* Content */}
-          <div className={`p-6 md:p-10 ${theme.panel}`}>
-            <h2 className="text-3xl font-extrabold mb-4">{data.title}</h2>
+          <div className={`p-4 sm:p-6 md:p-10 ${theme.panel}`}>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4">
+              {data.title}
+            </h2>
 
-            <p className="whitespace-pre-wrap leading-relaxed mb-6">{data.story}</p>
+            <p className="whitespace-pre-wrap leading-relaxed text-sm sm:text-base md:text-lg mb-6">
+              {data.story}
+            </p>
 
-            <div className="flex flex-wrap items-center gap-3 mb-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
               <FaMapPin className="text-blue-500" />
-              <span className="font-medium">
+              <span className="font-medium text-sm sm:text-base">
                 {Array.isArray(data.visitedLocation)
                   ? data.visitedLocation.join(", ")
                   : data.visitedLocation}
               </span>
             </div>
 
-            <p className={`${theme.sub}`}>{moment(data.visitedDate).format("Do MMMM YYYY")}</p>
+            <p className={`${theme.sub} text-xs sm:text-sm md:text-base`}>
+              {moment(data.visitedDate).format("Do MMMM YYYY")}
+            </p>
 
-            <div className="mt-8 flex flex-wrap gap-5">
+            {/* Buttons / Links */}
+            <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-5">
               <a
                 href={data.imageUrl}
                 target="_blank"
                 rel="noreferrer"
-                className={`${theme.link} underline-offset-2 hover:underline`}
+                className={`${theme.link} underline-offset-2 hover:underline text-sm sm:text-base`}
               >
                 View Full Image
               </a>
-              <a
+              <button
                 onClick={handleImageDownload}
-                
-                className={`${theme.link} underline-offset-2 hover:underline`}
+                className={`${theme.link} underline-offset-2 hover:underline text-sm sm:text-base`}
               >
                 Download
-              </a>
+              </button>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(data.imageUrl);
                   toast.success("Copied!");
                 }}
-                className={`${theme.link} underline-offset-2 hover:underline`}
+                className={`${theme.link} underline-offset-2 hover:underline text-sm sm:text-base`}
               >
                 Copy Image Link
               </button>
