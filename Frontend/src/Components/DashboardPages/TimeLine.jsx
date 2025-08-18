@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { DatePicker, Space, Input } from 'antd'
 import axiosInstance from '../../utils/ApiService'
 
+
 const TimeLine = () => {
   const { RangePicker } = DatePicker
   const { Search } = Input
@@ -11,6 +12,7 @@ const TimeLine = () => {
   const [startDate, SetstartDate] = useState(null)
   const [endDate, SetendDate] = useState(null)
   const[Filteredstories,setFilteredStories]=useState([]);
+  const[searchText,setSearchText]=useState("");
   const handleDates = (dates, DatesStrings) => {
     setDates(dates)
     SetstartDate(DatesStrings[0])
@@ -38,8 +40,49 @@ const TimeLine = () => {
       console.error('Error While fetching stories', error)
     }
   }
+
+const handleSearch=async(value)=>{
+const searchValue=value || searchText;
+setSearchText(searchValue);
+const paresedSDate = new Date(startDate)
+    const paresedEDate = new Date(endDate)
+
+try {
+  if(searchValue && startDate && endDate){
+    const[datesRes,searchRes]=await Promise.all([
+      axiosInstance.get('/api/travel-stories/filter',{params:{paresedSDate,paresedEDate}}),
+      axiosInstance.get('/api/search',{params:{query:searchValue}}),
+
+      
+
+    ])
+    const SearchIDS=new Set(searchRes.data.stories.map((s)=>s._id));
+    const combined =datesRes.data.stories.filter((s)=>SearchIDS.has(s._id));
+    console.log();
+    
+    setFilteredStories(combined);
+  }
+  else if(searchValue){
+   const response=await axiosInstance.get('/api/search',{params:{query:searchValue}});
+   setFilteredStories(response.data.stories);
+  }
+  else if(startDate && endDate){
+  const response = await axiosInstance.get('/api/travel-stories/filter',{params:{startDate:paresedSDate,endDate:paresedEDate}});
+setFilteredStories(response.data.stories);
+  }
+  else{
+    setFilteredStories([]);
+  }
+
+} catch (error) {
+  console.error("Error while applying filters", error);
+}
+
+}
+
 const  handleCancelFilter=()=>{
   setFilteredStories([]);
+  
   SetstartDate(null);
   SetendDate(null);
 }
@@ -89,11 +132,27 @@ const  handleCancelFilter=()=>{
           allowClear
           placeholder="Search stories..."
           className="w-full sm:w-64 md:w-80"
+          value={searchText}
+          onChange={(e)=>setSearchText(e.target.value)}
+          onSearch={handleSearch}
         />
+        {Filteredstories.length>0 && (
+          <button className='bg-gray-400 text-white px-4 py-2 rounded-lg'
+          onClick={()=>{
+            setFilteredStories([]);
+            setSearchText("");
+            SetstartDate(null);
+            SetendDate(null);
+            setDates([]);
+          }}
+          >
+            Clear
+          </button>
+        )}
       </div>
 
       {/* Timeline Content */}
-      {/* Timeline Content */}
+      
 <motion.div
   initial={{ opacity: 0, y: 50 }}
   whileInView={{ opacity: 1, y: 0 }}
