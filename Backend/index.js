@@ -18,6 +18,14 @@ import mongoose from 'mongoose'
 // import StoriesFilterRouter from './Routes/FilterStoriesRoute.js'
 // import ChangePasswordRouter from './Routes/ChangePassR.js'
 import Routes from './Routes/indexRoutes.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename=fileURLToPath(import.meta.url);
+const __dirname=path.dirname(__filename);
+
+
+
 dotenv.config();
 export const app = express();
 app.use(express.json());
@@ -32,7 +40,12 @@ catch (err) {
     console.error(err);
 }
 
+//serve build from the react
+app.use(express.static(path.join(__dirname,"../frontend/dist")));
 
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend/dist/index.html"));
+})
 // app.use('/api', AccountCreationRouter)
 // app.use('/api', LoginRoute)
 // app.use('/api', authenticateToken, getUserRoute)
@@ -49,7 +62,7 @@ app.use('/assets', express.static('assets'));
 // app.use('/api', authenticateToken, SearchRouter);
 // app.use('/api', authenticateToken, StoriesFilterRouter);
 // app.use('/api',authenticateToken,ChangePasswordRouter);
-app.use("/api",Routes)
+app.use("/api",Routes);
 let port = 8000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
