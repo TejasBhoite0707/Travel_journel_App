@@ -20,6 +20,10 @@ jobs:
             run: |
               cd Backend
               npm install
+          - name: Install Frontend Dependencies
+            run: |
+              cd Frontend
+              npm install    
           - name:  Build React App
             run: |    
               cd Frontend       
