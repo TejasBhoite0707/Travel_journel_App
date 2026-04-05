@@ -102,6 +102,10 @@ const Home = () => {
         You are writing your story, one memory at a time.
       </p>
 
+
+
+
+
       {/* Modal */}
       <NewStory open={modalOpen} onClose={() => setmodalOpen(false)} />
     </div>
