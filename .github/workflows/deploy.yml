@@ -37,3 +37,8 @@ jobs:
             run: |    
               cd Frontend       
               npm run build 
+          - name: Verify Backend Starts
+            run:  |
+              cd Backend
+              node index.js &
+              sleep 5     
