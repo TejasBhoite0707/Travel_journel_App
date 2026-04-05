@@ -49,7 +49,7 @@ app.use('/assets', express.static('assets'));
 // app.use('/api', authenticateToken, SearchRouter);
 // app.use('/api', authenticateToken, StoriesFilterRouter);
 // app.use('/api',authenticateToken,ChangePasswordRouter);
-app.use(Routes)
+app.use("/api",Routes)
 let port = 8000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
