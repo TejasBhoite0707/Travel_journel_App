@@ -14,7 +14,8 @@ const Home = () => {
   const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const [modalOpen, setmodalOpen] = useState(false);
-
+  console.log("USER_INFO",userInfo);
+  
   const getuserInfo = async () => {
     try {
       const response = await axiosInstance.get("/api/get-user");
