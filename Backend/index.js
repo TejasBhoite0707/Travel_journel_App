@@ -41,10 +41,10 @@ mongoose.connect(process.env.CONNECTION_STRING)
 });
 
 //serve build from the react
-app.use(express.static(path.join(__dirname,"../frontend/dist")));
+app.use(express.static(path.join(__dirname,"../Frontend/dist")));
 
 app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../frontend/dist/index.html"));
+    res.sendFile(path.join(__dirname,"../Frontend/dist/index.html"));
 })
 // app.use('/api', AccountCreationRouter)
 // app.use('/api', LoginRoute)
