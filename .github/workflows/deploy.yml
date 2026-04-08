@@ -31,6 +31,10 @@ jobs:
             run: |
               cd Frontend
               npm ci    
+          - name: Remove old Build
+            run:  |
+              cd Frontend
+              rm -rf dist    
           - name:  Build React App
             run: |    
               cd Frontend       
@@ -53,12 +57,18 @@ jobs:
               key: ${{secrets.EC2_SSH_KEY }}
               script: |
                 cd ~/Travel_journel_App
-                git pull origin main
+
+                # Always sync with latest commit
+                git fetch origin
+                git reset --hard origin/main
 
                 cd Backend
                 npm ci
 
                 cd ../Frontend
+                # Remove old build to avoid stale files
+                rm -rf dist
+
                 npm ci
                 npm run build
                 pm2 restart index || pm2 start index.js --name index
