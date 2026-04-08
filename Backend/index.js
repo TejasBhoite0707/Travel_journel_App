@@ -41,11 +41,7 @@ mongoose.connect(process.env.CONNECTION_STRING)
 });
 
 //serve build from the react
-app.use(express.static(path.join(__dirname,"../Frontend/dist")));
 
-app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../Frontend/dist/index.html"));
-})
 // app.use('/api', AccountCreationRouter)
 // app.use('/api', LoginRoute)
 // app.use('/api', authenticateToken, getUserRoute)
@@ -63,6 +59,11 @@ app.use('/assets', express.static('assets'));
 // app.use('/api', authenticateToken, StoriesFilterRouter);
 // app.use('/api',authenticateToken,ChangePasswordRouter);
 app.use("/api",Routes);
+app.use(express.static(path.join(__dirname,"../Frontend/dist")));
+
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../Frontend/dist/index.html"));
+})
 let port = 8000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
