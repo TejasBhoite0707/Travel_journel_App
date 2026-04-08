@@ -32,13 +32,13 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 
-try {
-    mongoose.connect(process.env.CONNECTION_STRING);
-    console.log("connected to database");
-}
-catch (err) {
-    console.error(err);
-}
+mongoose.connect(process.env.CONNECTION_STRING)
+.then(() => {
+    console.log("Connected to database");
+})
+.catch((err) => {
+    console.error("MongoDB connection error:", err);
+});
 
 //serve build from the react
 app.use(express.static(path.join(__dirname,"../frontend/dist")));
