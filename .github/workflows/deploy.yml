@@ -38,18 +38,39 @@ jobs:
           - name:  Build React App
             run: |    
               cd Frontend       
-              npm run build 
+              npm run build     
           - name: Verify Backend Starts
             run:  |
               cd Backend
               node index.js &
-              sleep 5     
+              sleep 5  
+          - name: Upload React Build Artifact
+            uses: actions/upload-artifact@v4
+            with: 
+              name: react-build
+              path: Frontend/dist       
     deploy:
         needs: build
         runs-on: ubuntu-latest
       
         steps:
-          - name: Deploy to EC2
+
+          - name: Download React Build
+            uses: actions/download-artifact@v4
+            with:
+              name: react-build
+              path: dist
+          
+          - name: Copy Build to EC2
+            uses: appleboy/scp-action@v1.0.3
+            with:
+              host: ${{secrets.EC2_HOST}}
+              username: ${{secrets.EC2_USER}}
+              key: ${{secrets.EC2_SSH_KEY }}
+              source: "dist/*"
+              target: "~/Travel_journel_App/Frontend/dist"
+
+          - name: Deploy to EC2(Backend)
             uses: appleboy/ssh-action@v1.0.3
             with:
               host: ${{secrets.EC2_HOST}}
@@ -65,10 +86,4 @@ jobs:
                 cd Backend
                 npm ci
 
-                cd ../Frontend
-                # Remove old build to avoid stale files
-                rm -rf dist
-
-                npm ci
-                npm run build
                 pm2 restart index || pm2 start index.js --name index
