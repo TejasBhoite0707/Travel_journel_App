@@ -40,3 +40,25 @@ jobs:
               cd Backend
               node index.js &
               sleep 5     
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+      
+        steps:
+          - name: Deploy to EC2
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+              host: ${{secrets.EC2_HOST}}
+              username: ${{secrets.EC2_USER}}
+              key: ${{secrets.EC2_SSH_KEY }}
+              script: |
+                cd ~/Travel_journel_App
+                git pull origin main
+
+                cd Backend
+                npm ci
+
+                cd ../Frontend
+                npm ci
+                npm run build
+                pm2 restart index || pm2 start index.js --name index
